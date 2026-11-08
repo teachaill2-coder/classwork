@@ -19,13 +19,29 @@ body{
     background:linear-gradient(135deg,#1B2A41,#324A6D);
     color:white;
     text-align:center;
-    padding:50px;
+    padding:60px 20px;
 }
 
 .container{
-    max-width:1000px;
+    max-width:1200px;
     margin:auto;
     padding:20px;
+}
+
+.main-layout{
+    display:flex;
+    gap:20px;
+    align-items:flex-start;
+}
+
+.left-column{
+    flex:2;
+}
+
+.right-column{
+    flex:1;
+    position:sticky;
+    top:20px;
 }
 
 .card{
@@ -35,6 +51,10 @@ body{
     padding:25px;
     margin-bottom:20px;
     box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
+
+h1{
+    margin:0;
 }
 
 h2{
@@ -50,7 +70,7 @@ pre{
 }
 
 input{
-    width:70%;
+    width:65%;
     padding:12px;
     border:1px solid #ccc;
     border-radius:8px;
@@ -85,22 +105,39 @@ li{
     color:gray;
 }
 
-.footer{
-    text-align:center;
-    padding:20px;
-    color:#666;
-}
-
 .task-time{
     color:#667788;
     font-size:14px;
-    margin-bottom:5px;
+    margin-bottom:4px;
 }
 
 .task-title{
     font-size:18px;
     font-weight:bold;
     color:#1B2A41;
+}
+
+.footer{
+    text-align:center;
+    padding:20px;
+    color:#666;
+}
+
+@media(max-width:900px){
+
+    .main-layout{
+        flex-direction:column;
+    }
+
+    .right-column{
+        position:static;
+        width:100%;
+    }
+
+    input{
+        width:100%;
+        margin-bottom:10px;
+    }
 }
 
 </style>
@@ -116,13 +153,19 @@ li{
 
 <div class="container">
 
+<div class="main-layout">
+
+<!-- 左側 -->
+
+<div class="left-column">
+
 <div class="card">
     <h2>📌 做了什麼</h2>
 
     <p>
         本專案建立一個 AI Todo Assistant，
         使用 Ollama 本地部署的 Llama3.2 模型，
-        將使用者輸入的自然語言提醒事項轉換為結構化 JSON，
+        將使用者輸入的自然語言提醒事項解析為結構化 JSON，
         並透過網頁介面呈現待辦事項。
     </p>
 </div>
@@ -135,7 +178,7 @@ li{
 
 ollama pull llama3.2
 
-2. 執行程式
+2. 執行 Python 程式
 
 python src/main.py
 
@@ -169,19 +212,19 @@ python src/main.py
 
     <p>
         本專案使用 Ollama 本地部署的 Llama3.2 模型，
-        並採用 Structured Output 技術，
-        將自然語言轉換為 JSON 結構化資料。
+        採用 Structured Output 技術，
+        將自然語言轉換成 JSON 格式。
 
         <br><br>
 
-        範例輸入：
+        使用者輸入：
 
         <br>
         「提醒我明天下午三點找老師討論論文」
 
         <br><br>
 
-        AI 解析後輸出：
+        AI 輸出：
 
         <br><br>
 
@@ -192,41 +235,72 @@ python src/main.py
 
         <br><br>
 
-        可進一步整合至待辦事項系統、
+        後續可進一步整合至待辦事項系統、
         行事曆或通知服務。
     </p>
 
 </div>
 
-<div class="card">
-    <h2>🔄 AI處理流程</h2>
+</div>
 
-    <p style="text-align:center;font-size:18px;line-height:2.2;">
-        使用者輸入
-        <br>⬇️<br>
-        Ollama Llama3.2
-        <br>⬇️<br>
-        Structured Output
-        <br>⬇️<br>
-        JSON 輸出
-        <br>⬇️<br>
-        待辦事項顯示
-    </p>
+<!-- 右側 -->
+
+<div class="right-column">
+
+    <!-- 互動式待辦清單 -->
+
+    <div class="card">
+
+        <h2>✅ 互動式待辦清單</h2>
+
+        <input
+            id="taskInput"
+            placeholder="輸入格式：時間 事件">
+
+        <button onclick="addTask()">
+            新增
+        </button>
+
+        <ul id="taskList"></ul>
+
+    </div>
+
+    <!-- AI處理流程 -->
+
+    <div class="card">
+
+        <h2>🔄 AI處理流程</h2>
+
+        <p style="
+            text-align:center;
+            line-height:2.2;
+            font-size:18px;">
+
+            使用者輸入
+
+            <br>⬇️<br>
+
+            Ollama Llama3.2
+
+            <br>⬇️<br>
+
+            Structured Output
+
+            <br>⬇️<br>
+
+            JSON 輸出
+
+            <br>⬇️<br>
+
+            待辦事項顯示
+
+        </p>
+
+    </div>
 
 </div>
 
-<div class="card">
-    <h2>✅ 互動式待辦清單</h2>
-
-    <input
-        id="taskInput"
-        placeholder="輸入格式：時間 事件">
-
-    <button onclick="addTask()">
-        新增
-    </button>
-
-    <ul id="taskList"></ul>
+</div>
 
 </div>
 
@@ -258,7 +332,7 @@ function addTask(){
     let task = parts.slice(1).join(" ");
 
     if(task===""){
-        task = "未命名事件";
+        task="未命名事件";
     }
 
     li.innerHTML = `
