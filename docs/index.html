@@ -1,43 +1,298 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
+
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>AI Todo Assistant</title>
+
+<style>
+
+body{
+    font-family:"Microsoft JhengHei",sans-serif;
+    background:#eef2f7;
+    margin:0;
+}
+
+.header{
+    background:linear-gradient(135deg,#1B2A41,#324A6D);
+    color:white;
+    text-align:center;
+    padding:50px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    border-left:6px solid #1B2A41;
+    border-radius:15px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0 3px 10px rgba(0,0,0,.1);
+}
+
+h2{
+    color:#1B2A41;
+}
+
+pre{
+    background:#1B2A41;
+    color:#42ff9e;
+    padding:15px;
+    border-radius:12px;
+    overflow:auto;
+}
+
+input{
+    width:70%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+button{
+    padding:12px 18px;
+    border:none;
+    border-radius:8px;
+    background:#1B2A41;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#324A6D;
+}
+
+li{
+    background:#f8fafc;
+    margin:10px 0;
+    padding:12px;
+    border-radius:10px;
+    list-style:none;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.done{
+    text-decoration:line-through;
+    color:gray;
+}
+
+.footer{
+    text-align:center;
+    padding:20px;
+    color:#666;
+}
+
+.task-time{
+    color:#667788;
+    font-size:14px;
+    margin-bottom:5px;
+}
+
+.task-title{
+    font-size:18px;
+    font-weight:bold;
+    color:#1B2A41;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h1>AI Todo Assistant</h1>
+<div class="header">
+    <h1>🤖 AI Todo Assistant</h1>
+    <p>Ollama + Llama3.2 + Structured Output</p>
+</div>
 
-<h2>做了什麼</h2>
-<p>
-利用 Ollama llama3.2 模型，
-將自然語言待辦事項轉換成 JSON。
-</p>
+<div class="container">
 
-<h2>怎麼執行</h2>
+<div class="card">
+    <h2>📌 做了什麼</h2>
+
+    <p>
+        本專案建立一個 AI Todo Assistant，
+        使用 Ollama 本地部署的 Llama3.2 模型，
+        將使用者輸入的自然語言提醒事項轉換為結構化 JSON，
+        並透過網頁介面呈現待辦事項。
+    </p>
+</div>
+
+<div class="card">
+    <h2>⚙️ 怎麼執行</h2>
+
 <pre>
+1. 安裝 Ollama
+
+ollama pull llama3.2
+
+2. 執行程式
+
 python src/main.py
+
+3. 輸入提醒事項
+
+提醒我明天下午三點找老師討論論文
 </pre>
 
-<h2>執行結果</h2>
+</div>
+
+<div class="card">
+    <h2>💬 執行結果</h2>
+
 <pre>
 輸入：
+
 提醒我明天下午三點找老師討論論文
 
 輸出：
+
 {
- "title":"找老師討論論文",
- "time":"明天下午三點"
+  "title":"找老師討論論文",
+  "time":"明天下午三點"
 }
 </pre>
 
-<h2>AI 使用說明</h2>
-<p>
-本專案使用 Ollama 本地大型語言模型 llama3.2。
-採用 Structured Output 技術，
-將自然語言轉換成 JSON 格式。
-</p>
+</div>
+
+<div class="card">
+    <h2>🤖 AI 使用說明</h2>
+
+    <p>
+        本專案使用 Ollama 本地部署的 Llama3.2 模型，
+        並採用 Structured Output 技術，
+        將自然語言轉換為 JSON 結構化資料。
+
+        <br><br>
+
+        範例輸入：
+
+        <br>
+        「提醒我明天下午三點找老師討論論文」
+
+        <br><br>
+
+        AI 解析後輸出：
+
+        <br><br>
+
+        {
+        "title":"找老師討論論文",
+        "time":"明天下午三點"
+        }
+
+        <br><br>
+
+        可進一步整合至待辦事項系統、
+        行事曆或通知服務。
+    </p>
+
+</div>
+
+<div class="card">
+    <h2>🔄 AI處理流程</h2>
+
+    <p style="text-align:center;font-size:18px;line-height:2.2;">
+        使用者輸入
+        <br>⬇️<br>
+        Ollama Llama3.2
+        <br>⬇️<br>
+        Structured Output
+        <br>⬇️<br>
+        JSON 輸出
+        <br>⬇️<br>
+        待辦事項顯示
+    </p>
+
+</div>
+
+<div class="card">
+    <h2>✅ 互動式待辦清單</h2>
+
+    <input
+        id="taskInput"
+        placeholder="輸入格式：時間 事件">
+
+    <button onclick="addTask()">
+        新增
+    </button>
+
+    <ul id="taskList"></ul>
+
+</div>
+
+</div>
+
+<div class="footer">
+AI Todo Assistant | GitHub Pages Demo
+</div>
+
+<script>
+
+function addTask(){
+
+    const input =
+        document.getElementById("taskInput");
+
+    const text =
+        input.value.trim();
+
+    if(text==="") return;
+
+    const li =
+        document.createElement("li");
+
+    let parts = text.split(" ");
+
+    let time = parts[0];
+
+    let task = parts.slice(1).join(" ");
+
+    if(task===""){
+        task = "未命名事件";
+    }
+
+    li.innerHTML = `
+        <div onclick="toggleTask(this)">
+            <div class="task-time">
+                🕒 ${time}
+            </div>
+
+            <div class="task-title">
+                📌 ${task}
+            </div>
+        </div>
+
+        <button onclick="removeTask(this)">
+            刪除
+        </button>
+    `;
+
+    document
+        .getElementById("taskList")
+        .appendChild(li);
+
+    input.value="";
+}
+
+function toggleTask(item){
+    item.classList.toggle("done");
+}
+
+function removeTask(btn){
+    btn.parentElement.remove();
+}
+
+</script>
 
 </body>
 </html>
