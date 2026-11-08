@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AI Todo Assistant</title>
+</head>
+
+<body>
+
+<h1>AI Todo Assistant</h1>
+
+<h2>做了什麼</h2>
+<p>
+利用 Ollama llama3.2 模型，
+將自然語言待辦事項轉換成 JSON。
+</p>
+
+<h2>怎麼執行</h2>
+<pre>
+python src/main.py
+</pre>
+
+<h2>執行結果</h2>
+<pre>
+輸入：
+提醒我明天下午三點找老師討論論文
+
+輸出：
+{
+ "title":"找老師討論論文",
+ "time":"明天下午三點"
+}
+</pre>
+
+<h2>AI 使用說明</h2>
+<p>
+本專案使用 Ollama 本地大型語言模型 llama3.2。
+採用 Structured Output 技術，
+將自然語言轉換成 JSON 格式。
+</p>
+
+</body>
+</html>
